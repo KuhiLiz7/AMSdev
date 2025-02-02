@@ -1,1 +1,3 @@
-# This repository contains apartment management system api build with django
+
+<<<<<<< apidjango
+## This repository contains apartment management system api build with django
