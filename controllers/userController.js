@@ -1,53 +1,69 @@
 const fs = require("fs");
 
+const User = require("./../models/userModel");
+
 const userData = JSON.parse(
   fs.readFileSync(`${__dirname}/../devdata/users.json`, "utf-8")
 );
 
 /**Handler functions */
 /**Handler funciton for getting all Users */
-exports.getAllUsers = (req, res, next) => {
-  res.status(200).json({
-    status: "success",
-    items: userData.length,
-    data: userData,
-    message: "This will display all users and their roles",
-  });
+exports.getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+
+    res.status(200).json({
+      status: "success",
+      items: users.length,
+      data: users,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "error",
+      message: err,
+    });
+  }
 };
 
-/**Handler function for creating a user */
-exports.createUser = (req, res, next) => {
-  const id = userData[userData.length - 1].id + 1;
-  const newUser = { ...req.body, id: id };
-  userData.push(newUser);
+/**Handler function for creating a user (THIS FUNCTIONALITY WILL BE FOR ADMINS/CARETAKERS NOT TENANTS THEMSELVES) */
+exports.createUser = async (req, res, next) => {
+  try {
+    const newUser = await User.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
+      role: req.body.role,
+      gender: req.body.gender,
+    });
 
-  fs.writeFile(
-    `${__dirname}/devdata/users.json`,
-    JSON.stringify(userData),
-    err => {
-      if (err)
-        res.status(400).json({
-          status: "error",
-          message: "Error performing write operations.",
-        });
-    }
-  );
-
-  res.status(201).json({
-    status: "success",
-    data: newUser,
-  });
+    res.status(201).json({
+      status: "success",
+      data: newUser,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "error",
+      message: err,
+    });
+  }
 };
 
 /**Handler funciton for getting a user */
-exports.getUser = (req, res, next) => {
-  const user = userData.filter(u => u.id === req.params.id * 1);
+exports.getUser = async (req, res, next) => {
+  try {
+    const user = await User.find({ email: req.body.email });
 
-  res.status(200).json({
-    status: "success",
-    data: user,
-    message: "This will display a specifi user.",
-  });
+    res.status(200).json({
+      status: "success",
+      data: user,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "error",
+      message: err,
+    });
+  }
 };
 
 /**Handler function for updating user data */

@@ -5,6 +5,8 @@ const userController = require("./../controllers/userController");
 /**Routes for handling users CRUD OPERATIONS */
 const router = express.Router();
 
+router.get("/getUser", userController.getUser);
+
 router
   .route("/")
   .get(userController.getAllUsers)
@@ -12,7 +14,6 @@ router
 
 router
   .route("/:id")
-  .get(userController.getUser)
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
 
