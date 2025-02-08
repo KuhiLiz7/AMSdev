@@ -4,12 +4,13 @@
   "description": "Apartment management System",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch script.js"
+    "start": "node --watch server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2"
   }
 }
