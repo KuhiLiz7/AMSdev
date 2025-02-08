@@ -73,6 +73,7 @@ app.get("/api/v1/users/:id", (req, res) => {
 app.post("/api/v1/users", (req, res) => {
   const id = userData[userData.length - 1].id + 1;
   const newUser = { ...req.body, id: id };
+  userData.push(newUser);
 
   fs.writeFile(
     `${__dirname}/devdata/users.json`,
@@ -143,6 +144,6 @@ app.delete("/api/v1/users/:id", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
+app.listen(8000, () => {
   console.log("This is your express application running on port 3000");
 });
