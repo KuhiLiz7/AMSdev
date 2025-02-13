@@ -1,9 +1,16 @@
 const dotenv = require("dotenv");
 const moongose = require("mongoose");
 
-const app = require("./app");
+/**Handling synchronous */
+process.on("uncaughtException", err => {
+  console.log("UNCAUGHT EXCEPTION 💣 SHTTING DOWN!");
+  console.log(err.name, err.message);
+
+  process.exit(1);
+});
 
 /**Initialising out DOTENV package */
+// dotenv.config({ path: "./config.env" }); (If you have another name apart from .env)
 dotenv.config();
 
 /**Connect to the database using mongoose Driver. */
@@ -12,16 +19,23 @@ const url = process.env.MONGODB_URL.replace(
   process.env.MONGODB_USERNAME
 ).replace("<DB_PASSWORD>", process.env.MONGODB_PASSWORD);
 
-moongose
-  .connect(url)
-  .then(() => {
-    console.log("Connected to the database successfully😊!");
-  })
-  .catch(err => {
-    console.log("Failed to connect to DB");
-  });
+moongose.connect(url).then(() => {
+  console.log("Connected to the database successfully😊!");
+});
+
+const app = require("./app");
 
 /**Here we are starting up the server */
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
   console.log("This is your express application running on port 8000");
+});
+
+/**Global error handling for asynchronous code */
+process.on("unhandledRejection", (err, promise) => {
+  console.log("UNHANDLED REJECTION! 💣  SHUTTING DOWN");
+  console.log(err.name, err.message);
+
+  server.close(() => {
+    process.exit(1);
+  });
 });

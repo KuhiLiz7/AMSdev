@@ -11,6 +11,7 @@ const userSchema = new moongose.Schema({
   },
   email: {
     type: String,
+    required: [true, "A user must have a valid email!"],
   },
   password: {
     type: String,
