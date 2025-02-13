@@ -1,1 +1,1 @@
-# This repository contains apartment management system frontend build with ReactJS
+# This repository contains the marketing website for the apartment management system.
