@@ -1,10 +1,5 @@
 function Dashboard() {
-  return (
-    <div>
-      This will be the apartment page dashboard where some given routes and
-      routing will take place
-    </div>
-  );
+  return <div>Display the dashboard</div>;
 }
 
 export default Dashboard;
