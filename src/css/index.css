@@ -1,4 +1,6 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -13,8 +15,20 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: all;
 }
 
 body {
   margin: 0;
+}
+
+@layer base {
+}
+
+/*Defining custom utility classes or single purpose classes  */
+@layer utilities {
+}
+
+/* Here we apply styles to reusable components where we use the @apply directive */
+@layer components {
 }
