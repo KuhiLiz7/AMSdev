@@ -13,6 +13,12 @@ import Login from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import AppLayout from './layout/AppLayout';
 import Protected from './components/Protected';
+import Dashboard from './Dashboard/Dashboard';
+import Tenants from './Dashboard/Tenants/Tenants';
+import Payments from './Dashboard/Payments/Payments';
+import Notification from './Dashboard/Notifications/Notification';
+import Apartment from './Dashboard/Apartment/Apartment';
+import Maintenance from './Dashboard/Maintenance/Maintenance';
 
 function App() {
   return (
@@ -25,12 +31,15 @@ function App() {
           </Protected>
         }
       >
-        <Route path="/communication" element={<Communication />} />
-        <Route path="/adjustments" element={<Adjustments />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/tenants" element={<Tenants />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/financials" element={<Financials />} />
+        <Route path="/payments" element={<Payments />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/apartment" element={<Apartment />} />
+        <Route path="/maintenance" element={<Maintenance />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/notifications" element={<Notification />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

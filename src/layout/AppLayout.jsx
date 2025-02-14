@@ -2,6 +2,7 @@ import { useState } from 'react';
 import BreadCrumps from '../components/BreadCrumps';
 import Header from '../components/Header';
 import SideNav from '../components/SideNav';
+import { Outlet } from 'react-router';
 
 function AppLayout({ children }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -31,6 +32,7 @@ function AppLayout({ children }) {
               <BreadCrumps />
 
               {children}
+              <Outlet />
             </div>
           </main>
           {/* --- MAIN CONTENT END */}

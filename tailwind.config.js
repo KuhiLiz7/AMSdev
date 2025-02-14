@@ -202,7 +202,7 @@ export default {
         65: '.65',
       },
       backgroundImage: {
-        video: "url('../images/video/video.png')",
+        'login-img': "url('./../images/img-login.jpg')",
       },
       content: {
         'icon-copy': 'url("../images/icon/icon-copy-alt.svg")',

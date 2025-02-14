@@ -1,9 +1,9 @@
 function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+    <div className="login-page flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
         <h2 className="mb-6 text-center text-2xl font-bold text-gray-900">
-          Sign In
+          Sign In to AMS
         </h2>
 
         <form className="space-y-4">
@@ -30,13 +30,13 @@ function LoginPage() {
           </div>
 
           <div className="flex items-center justify-between">
-            <label className="flex items-center">
+            {/* <label className="flex items-center">
               <input
                 type="checkbox"
                 className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
               <span className="ml-2 text-sm text-gray-600">Remember me</span>
-            </label>
+            </label> */}
             <a
               href="#"
               className="text-sm text-indigo-600 hover:text-indigo-500"
@@ -50,7 +50,7 @@ function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-600">
+        {/* <div className="mt-6 text-center text-sm text-gray-600">
           Dont have an account?
           <a
             href="#"
@@ -58,7 +58,7 @@ function LoginPage() {
           >
             Sign up
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -45,39 +45,39 @@ function SideNav({ isOpen }) {
                 <span>Dashboard</span>
               </NavLinkItem>
 
-              <NavLinkItem linkTo="/financials">
+              <NavLinkItem linkTo="/apartment">
                 <span>
                   <BuildingOffice2Icon className="h-5.5 w-5.5" />
                 </span>
                 <span>Apartments</span>
               </NavLinkItem>
 
-              <NavLinkItem linkTo="/reports">
+              <NavLinkItem linkTo="/tenants">
                 <span>
                   <UserGroupIcon className="h-5.5 w-5.5" />
                 </span>
                 <span>Tenants</span>
               </NavLinkItem>
 
-              <NavLinkItem linkTo="/communication">
+              <NavLinkItem linkTo="/payments">
                 <span>
                   <CurrencyDollarIcon className="h-5.5 w-5.5" />
                 </span>
                 <span>Payments</span>
               </NavLinkItem>
-              <NavLinkItem linkTo="/communication">
+              <NavLinkItem linkTo="/maintenance">
                 <span>
                   <WrenchScrewdriverIcon className="h-5.5 w-5.5" />
                 </span>
                 <span>Maintenance</span>
               </NavLinkItem>
-              <NavLinkItem linkTo="/communication">
+              <NavLinkItem linkTo="/reports">
                 <span>
                   <DocumentDuplicateIcon className="h-5.5 w-5.5" />
                 </span>
                 <span>Reports</span>
               </NavLinkItem>
-              <NavLinkItem linkTo="/communication">
+              <NavLinkItem linkTo="/notifications">
                 <span>
                   <BellIcon className="h-5.5 w-5.5" />
                 </span>
