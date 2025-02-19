@@ -10,6 +10,10 @@ const handleValidationError = err => {
   return new AppError(errorMsgs, err.statusCode);
 };
 
+const handleTokenExpiredError = err => {
+  return new AppError("Invalid or expired token. Please log in again.", 401);
+};
+
 const sendErrorDevelopment = (err, res) => {
   /**IN DEVELOPMENT MODE WE WANT TO SEE THE WHOLE ERROR AND STACK TRACE! */
   res.status(err.statusCode).json({
@@ -50,6 +54,7 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
     if (err.name === "ValidationError") error = handleValidationError(err);
+    if (err.name === "TokenExpiredError") error = handleTokenExpiredError(err);
 
     sendErrorProduction(error, res);
   }

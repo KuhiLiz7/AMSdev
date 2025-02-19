@@ -24,13 +24,17 @@ exports.createUser = catchAsync(async (req, res, next) => {
     lastName: req.body.lastName,
     email: req.body.email,
     phoneNumber: req.body.phoneNumber,
+    password: req.body.password,
+    passwordConfirm: req.body.passwordConfirm,
     role: req.body.role,
     gender: req.body.gender,
   });
 
   res.status(201).json({
     status: "success",
-    data: newUser,
+    data: {
+      data: newUser,
+    },
   });
 });
 

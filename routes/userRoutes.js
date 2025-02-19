@@ -6,13 +6,27 @@ const authController = require("./../controllers/authController");
 /**Routes for handling users CRUD OPERATIONS */
 const router = express.Router();
 
-router.get("/getUser", userController.getUser);
-router.post("/login", authController.login);
+router.route("/forgotPassword").post(authController.forgotPassword);
+router.route("/validateToken").post(authController.tokenValidate);
+router.route("/resetPassword").post(authController.resetPassword);
+
+router.route("/updatePassword").post(authController.updatePassword);
+
+router.route("/getUser").get(userController.getUser);
+router.route("/login").post(authController.login);
 
 router
   .route("/")
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
+  .get(
+    authController.protect,
+    // authController.restrictTo("admin", "caretaker", "manager"),
+    userController.getAllUsers
+  )
+  .post(
+    authController.protect,
+    authController.restrictTo("admin", "caretaker", "manager"),
+    userController.createUser
+  );
 
 router
   .route("/:id")
