@@ -14,14 +14,13 @@ router.route("/updatePassword").post(authController.updatePassword);
 
 router.route("/getUser").get(userController.getUser);
 router.route("/login").post(authController.login);
+router.route("/logout").get(authController.logout);
+
+router.route("/me").get(authController.getCurrentUser);
 
 router
   .route("/")
-  .get(
-    authController.protect,
-    // authController.restrictTo("admin", "caretaker", "manager"),
-    userController.getAllUsers
-  )
+  .get(authController.protect, userController.getAllUsers)
   .post(
     authController.protect,
     authController.restrictTo("admin", "caretaker", "manager"),

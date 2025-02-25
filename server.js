@@ -27,7 +27,10 @@ const app = require("./app");
 
 /**Here we are starting up the server */
 const server = app.listen(process.env.PORT, () => {
-  console.log("This is your express application running on port 8000");
+  console.log(
+    "This is your express application running on port ",
+    process.env.PORT
+  );
 });
 
 /**Global error handling for asynchronous code */
