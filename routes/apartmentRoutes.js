@@ -11,7 +11,7 @@ router
   .post(apartmentsController.createApartment);
 
 router
-  .route("/")
+  .route("/:num")
   .delete(apartmentsController.deleteApartment)
   .patch(apartmentsController.updateApartment)
   .get(apartmentsController.getApartment);

@@ -1,14 +1,14 @@
-const Apartment = require("./../models/apartmentModel");
+const Unit = require("../models/unitModel");
 
-/**Routes for handling apartment CRUD OPERATIONS */
-exports.getApartment = async (req, res) => {
+/**Routes for handling unit CRUD OPERATIONS */
+exports.getUnit = async (req, res) => {
   try {
-    const apartment = await Apartment.findOne({ apartmentNum: req.params.num });
+    const unit = await Unit.findOne({ unitNum: req.params.num });
 
     res.status(200).json({
       status: "success",
       data: {
-        data: apartment,
+        data: unit,
       },
     });
   } catch (err) {
@@ -20,13 +20,13 @@ exports.getApartment = async (req, res) => {
   }
 };
 
-exports.createApartment = async (req, res) => {
+exports.createUnit = async (req, res) => {
   try {
-    const apartment = await Apartment.create(req.body);
+    const unit = await Unit.create(req.body);
 
     res.status(201).json({
       status: "success",
-      data: apartment,
+      data: unit,
     });
   } catch (err) {
     res.status(400).json({
@@ -36,11 +36,11 @@ exports.createApartment = async (req, res) => {
   }
 };
 
-exports.updateApartment = async (req, res) => {
+exports.updateUnit = async (req, res) => {
   try {
-    const updatedApartment = await Apartment.findOneAndUpdate(
+    const updatedunit = await Unit.findOneAndUpdate(
       {
-        apartmentNum: { $eq: req.params.num },
+        unitNum: { $eq: req.params.num },
       },
       req.body,
       { new: true, runValidators: true }
@@ -48,7 +48,7 @@ exports.updateApartment = async (req, res) => {
 
     res.status(200).json({
       status: "success",
-      data: updatedApartment,
+      data: updatedunit,
     });
   } catch (err) {
     console.log(err);
@@ -59,14 +59,14 @@ exports.updateApartment = async (req, res) => {
   }
 };
 
-exports.getAllApartments = async (req, res) => {
+exports.getAllUnits = async (req, res) => {
   try {
-    const apartments = await Apartment.find();
+    const units = await Unit.find();
 
     res.status(200).json({
       status: "success",
-      items: apartments.length,
-      data: apartments,
+      items: units.length,
+      data: units,
     });
   } catch (err) {
     console.log(err);
@@ -77,15 +77,15 @@ exports.getAllApartments = async (req, res) => {
   }
 };
 
-exports.deleteApartment = async (req, res) => {
+exports.deleteUnit = async (req, res) => {
   try {
-    const apartment = await Apartment.deleteOne({
-      apartmentNum: req.params.num,
+    const unit = await Unit.deleteOne({
+      unitNum: req.params.num,
     });
 
     res.status(204).json({
       status: "success",
-      message: "Successfuly deleted apartment",
+      message: "Successfuly deleted unit",
     });
   } catch (err) {
     console.log(err);

@@ -4,6 +4,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const userRouter = require("./routes/userRoutes");
+const unitsRouter = require("./routes/unitRoutes");
+const transactionRouter = require("./routes/transactionRoutes");
 const apartmentsRouter = require("./routes/apartmentRoutes");
 const errorController = require("./controllers/errorController");
 
@@ -35,13 +37,15 @@ app.use(cookieParser());
 /**Custom middleware */
 app.use((req, res, next) => {
   console.log("Hello there from this middleware 😂");
-  console.log(req.cookies);
+  // console.log(req.cookies);
 
   next();
 });
 
 /**Mounting the router function to the application as middleware */
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/units", unitsRouter);
+app.use("/api/v1/transactions", transactionRouter);
 app.use("/api/v1/apartments", apartmentsRouter);
 
 /**GLOBAL HANDLING OF UNHANDLED ROUTES */
