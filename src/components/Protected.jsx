@@ -1,13 +1,21 @@
-import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import useUser from '../features/authentication/useUser';
 
 function Protected({ children }) {
-  /**Fake implementation */
-  // eslint-disable-next-line no-unused-vars
-  const [isAuthenticated, setisAuthenticated] = useState(false);
+  /**Checking whether there is a cached user */
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    enabled: false,
+  });
 
-  console.log(isAuthenticated);
-  return isAuthenticated === true ? children : <Navigate to="/login" replace />;
+  const { isauthenticated } = useUser();
+  console.log(isauthenticated);
+  /**TODO:IMPLEMENT A GLOBAL LOADER FALLBACK */
+
+  console.log(user);
+
+  return user ? children : <Navigate to="/login" replace />;
 }
 
 export default Protected;

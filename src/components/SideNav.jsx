@@ -14,8 +14,11 @@ import {
 } from '@heroicons/react/16/solid';
 import { UserCircleIcon } from '@heroicons/react/16/solid';
 import NavLinkItem from '../ui/NavLinkItem';
+import { useLogout } from '../features/authentication/useLogout';
 
 function SideNav({ isOpen }) {
+  const { logout } = useLogout();
+
   return (
     <aside
       className={`sidenav flex flex-col bg-boxdark-2 transition-all duration-300 max-md:fixed max-md:top-0 max-md:h-full md:relative md:z-999 md:w-72.5 ${isOpen ? 'z-999 w-72.5' : '-z-50 w-0'}`}
@@ -117,7 +120,7 @@ function SideNav({ isOpen }) {
       <div className="mt-auto px-6 py-4.5">
         <ul>
           <li>
-            <button>
+            <button onClick={logout}>
               <p className="flex items-center space-x-6 overflow-hidden px-2">
                 <span>
                   <ArrowLeftStartOnRectangleIcon className="h-5.5 w-5.5" />

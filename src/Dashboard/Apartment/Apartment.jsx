@@ -1,5 +1,5 @@
 function Apartment() {
-  return <div>This will be for the apartment.</div>;
+  return <div className="">This will be for the apartment.</div>;
 }
 
 export default Apartment;

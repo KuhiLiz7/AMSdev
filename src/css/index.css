@@ -11,7 +11,7 @@
   font-style: normal;
   line-height: 1.5;
 
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
   color: rgba(255, 255, 255, 0.87);
 
   font-synthesis: none;
@@ -20,8 +20,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@layer base {
-}
+@layer base {}
 
 /*Defining custom utility classes or single purpose classes  */
 @layer utilities {
@@ -36,5 +35,4 @@
 }
 
 /* Here we apply styles to reusable components where we use the @apply directive */
-@layer components {
-}
+@layer components {}
