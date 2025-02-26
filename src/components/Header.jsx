@@ -5,9 +5,10 @@ import {
   ChevronDownIcon,
   HomeIcon,
   SunIcon,
+  UserCircleIcon,
   XMarkIcon,
 } from '@heroicons/react/16/solid';
-import user from './../images/user-01.png';
+// import user from './../images/user-01.png';
 
 function Header({ onToggleSideBar, isOpen }) {
   return (
@@ -42,7 +43,8 @@ function Header({ onToggleSideBar, isOpen }) {
               <span className="text-xs">Tenant</span>
             </p>
             <div className="h-10 w-10">
-              <img src={user} alt="User1" />
+              {/* <img src={user} alt="User1" /> */}
+              <UserCircleIcon className="h-10 w-10 fill-black" />
             </div>
             <span>
               <ChevronDownIcon className="h-5 w-5 fill-black" />

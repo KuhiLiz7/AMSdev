@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import useUser from '../features/authentication/useUser';
 
@@ -15,7 +15,8 @@ function Protected({ children }) {
 
   console.log(user);
 
-  return user ? children : <Navigate to="/login" replace />;
+  // return user ? children : <Navigate to="/login" replace />;
+  return children;
 }
 
 export default Protected;
