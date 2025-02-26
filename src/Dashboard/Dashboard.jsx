@@ -138,28 +138,68 @@ function Dashboard() {
       <section className="rounded-sm bg-body px-6 py-4">
         <div className="grid grid-cols-2 gap-12">
           <div className="bg-orange-200">
-            <PieChart width={800} height={400}>
-              <Pie
-                data={data}
-                cx={120}
-                cy={200}
-                innerRadius={60}
-                outerRadius={80}
-                fill="#8884d8"
-                paddingAngle={5}
-                dataKey="value"
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-            </PieChart>
-            <ul>
-              <li></li>
-            </ul>
+            <div className="flex justify-between px-2 py-4.5">
+              <p>Apartment Occupancy Rate</p>
+              <form>
+                <select>
+                  <option>Filter by</option>
+                  <option>Location</option>
+                  <option>Month</option>
+                  <option>Type</option>
+                </select>
+              </form>
+            </div>
+            <div className="flex">
+              <PieChart width={400} height={400} className="bg-purple-500">
+                <Pie
+                  data={data}
+                  cx={120}
+                  cy={200}
+                  innerRadius={60}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {data.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+              <ul className="bg-green-400">
+                <li>
+                  <p>
+                    <span></span>
+                    <span>Nairobi</span>
+                  </p>
+                  <p>52.1%</p>
+                </li>
+                <li>
+                  <p>
+                    <span></span>
+                    <span>Embu</span>
+                  </p>
+                  <p>22.8%</p>
+                </li>
+                <li>
+                  <p>
+                    <span></span>
+                    <span>Meru</span>
+                  </p>
+                  <p>13.9%</p>
+                </li>
+                <li>
+                  <p>
+                    <span className="inline-block h-2 w-2 rounded-full bg-red-500"></span>
+                    <span>Nakuru</span>
+                  </p>
+                  <p>11.9%</p>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <div className="bg-red-500 text-slate-100">
