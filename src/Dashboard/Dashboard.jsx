@@ -10,6 +10,7 @@ import {
 import {
   CartesianGrid,
   Cell,
+  Legend,
   Line,
   LineChart,
   Pie,
@@ -149,56 +150,35 @@ function Dashboard() {
                 </select>
               </form>
             </div>
-            <div className="flex">
-              <PieChart width={400} height={400} className="bg-purple-500">
-                <Pie
-                  data={data}
-                  cx={120}
-                  cy={200}
-                  innerRadius={60}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {data.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-              </PieChart>
-              <ul className="bg-green-400">
-                <li>
-                  <p>
-                    <span></span>
-                    <span>Nairobi</span>
-                  </p>
-                  <p>52.1%</p>
-                </li>
-                <li>
-                  <p>
-                    <span></span>
-                    <span>Embu</span>
-                  </p>
-                  <p>22.8%</p>
-                </li>
-                <li>
-                  <p>
-                    <span></span>
-                    <span>Meru</span>
-                  </p>
-                  <p>13.9%</p>
-                </li>
-                <li>
-                  <p>
-                    <span className="inline-block h-2 w-2 rounded-full bg-red-500"></span>
-                    <span>Nakuru</span>
-                  </p>
-                  <p>11.9%</p>
-                </li>
-              </ul>
+            <div>
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer>
+                  <PieChart>
+                    <Pie
+                      data={data}
+                      cx="50%" // Center horizontally
+                      cy="50%" // Center vertically
+                      innerRadius={60} // Optional: Donut chart effect
+                      outerRadius={90}
+                      fill="#8884d8"
+                      paddingAngle={5}
+                      dataKey="value"
+                      label={({ name, percent }) =>
+                        `${name} (${(percent * 100).toFixed(0)}%)`
+                      }
+                    >
+                      {data.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
 
