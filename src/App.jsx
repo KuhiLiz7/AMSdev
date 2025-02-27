@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import Profile from './Dashboard/profile/Profile';
 import Settings from './Dashboard/settings/Settings';
@@ -33,30 +33,31 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Protected>
-              <AppLayout />
-            </Protected>
-          }
-        >
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/tenants" element={<Tenants />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/payments" element={<Payments />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/apartment" element={<Apartment />} />
-          <Route path="/maintenance" element={<Maintenance />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/notifications" element={<Notification />} />
-        </Route>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Protected>
+                <AppLayout />
+              </Protected>
+            }
+          >
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/tenants" element={<Tenants />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/apartment" element={<Apartment />} />
+            <Route path="/maintenance" element={<Maintenance />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/notifications" element={<Notification />} />
+          </Route>
 
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
       <Toaster
         position="top-center"
         gutter={12}

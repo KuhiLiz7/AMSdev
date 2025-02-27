@@ -2,7 +2,7 @@ import { useState } from 'react';
 import BreadCrumps from '../components/BreadCrumps';
 import Header from '../components/Header';
 import SideNav from '../components/SideNav';
-import { Outlet } from 'react-router';
+import { Outlet } from 'react-router-dom';
 
 function AppLayout({ children }) {
   const [isOpen, setIsOpen] = useState(true);
