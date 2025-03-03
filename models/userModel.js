@@ -6,20 +6,20 @@ const crypto = require("crypto");
 const userSchema = new moongose.Schema({
   firstName: {
     type: String,
-    required: [true, "A user must contain firstName"],
+    // required: [true, "A user must contain firstName"],
   },
   lastName: {
     type: String,
   },
   email: {
     type: String,
-    required: [true, "A user must have a valid email!"],
-    lowercase: true,
+    // required: [true, "A user must have a valid email!"],
+    // lowercase: true,
     unique: true,
   },
   password: {
     type: String,
-    // default: "Userlogs@123",
+    default: "Userlogs@123",
     required: [true, "A user must contain a password"],
     minLength: [
       5,
@@ -28,7 +28,6 @@ const userSchema = new moongose.Schema({
   },
   passwordConfirm: {
     type: String,
-
     validate: {
       validator: function (value) {
         return value === this.password;
@@ -40,25 +39,29 @@ const userSchema = new moongose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: [true, "A tenant must have a phone number!"],
-    unique: true,
-    validate: {
-      validator: function (v) {
-        return /^\+?[0-9]{1,4}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,9}$/.test(
-          v
-        );
-      },
-      message: props => `${props.value}: is not a valid number!`,
-    },
+    // required: [true, "A tenant must have a phone number!"],
+    // unique: true,
+    // validate: {
+    //   validator: function (v) {
+    //     return /^\+?[0-9]{1,4}?[-.\s]?\(?[0-9]{1,3}?\)?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,9}$/.test(
+    //       v
+    //     );
+    //   },
+    //   message: props => `${props.value}: is not a valid number!`,
+    // },
   },
   role: {
     type: String,
     default: "user",
-    enum: ["manager", "admin", "tenant", "caretaker"],
+    enum: ["manager", "admin", "tenant", "caretaker", "user"],
   },
   gender: {
     type: String,
     enum: ["Male", "Female"],
+  },
+  active: {
+    type: Boolean,
+    default: true,
   },
   profilePicture: {
     type: String,
@@ -68,6 +71,10 @@ const userSchema = new moongose.Schema({
   },
   passwordResetExpiresIn: {
     type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

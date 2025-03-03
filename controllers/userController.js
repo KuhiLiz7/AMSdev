@@ -6,7 +6,7 @@ const User = require("./../models/userModel");
 /**Handler funciton for getting all Users */
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
+  const users = await User.find().sort({ createdAt: -1 });
 
   res.status(200).json({
     status: "success",

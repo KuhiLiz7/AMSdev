@@ -1,4 +1,5 @@
 const Unit = require("../models/unitModel");
+const catchAsync = require("../utils/catchAsync");
 
 /**Routes for handling unit CRUD OPERATIONS */
 exports.getUnit = async (req, res) => {
@@ -20,21 +21,23 @@ exports.getUnit = async (req, res) => {
   }
 };
 
-exports.createUnit = async (req, res) => {
-  try {
-    const unit = await Unit.create(req.body);
+exports.createUnit = catchAsync(async (req, res, next) => {
+  const unit = await Unit.create({
+    unitType: req.body.unitType,
+    apartmentUnit: req.body.apartmentUnit,
+    unitNum: req.body.unitNum,
+    floor: req.body.floor,
+    status: req.body.status,
+    description: req.body.description,
+  });
 
-    res.status(201).json({
-      status: "success",
-      data: unit,
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "failed",
-      data: err,
-    });
-  }
-};
+  console.log(unit);
+
+  res.status(201).json({
+    status: "success",
+    data: unit,
+  });
+});
 
 exports.updateUnit = async (req, res) => {
   try {
@@ -61,7 +64,7 @@ exports.updateUnit = async (req, res) => {
 
 exports.getAllUnits = async (req, res) => {
   try {
-    const units = await Unit.find();
+    const units = await Unit.find().sort({ createdAt: -1 });
 
     res.status(200).json({
       status: "success",
@@ -79,8 +82,8 @@ exports.getAllUnits = async (req, res) => {
 
 exports.deleteUnit = async (req, res) => {
   try {
-    const unit = await Unit.deleteOne({
-      unitNum: req.params.num,
+    const unit = await Unit.findOneAndDelete({
+      _id: req.body.id,
     });
 
     res.status(204).json({

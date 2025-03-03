@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 const unitSchema = mongoose.Schema({
   unitType: {
     type: String,
-    // enum: ["bedsitter", "single", "one-bedroom", "two-bedroom"],
+    enum: ["bedsitter", "single", "one-bedroom", "two-bedroom"],
+  },
+  apartmentUnit: {
+    type: String,
   },
   unitNum: {
     type: Number,
@@ -13,9 +16,14 @@ const unitSchema = mongoose.Schema({
   },
   status: {
     type: Boolean,
+    default: false,
   },
-  image: {
+  description: {
     type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

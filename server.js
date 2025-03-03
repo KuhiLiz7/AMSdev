@@ -26,7 +26,7 @@ moongose.connect(url).then(() => {
 const app = require("./app");
 
 /**Here we are starting up the server */
-const server = app.listen(process.env.PORT, "0.0.0.0", () => {
+const server = app.listen(process.env.PORT, "localhost", () => {
   console.log(
     "This is your express application running on port ",
     process.env.PORT

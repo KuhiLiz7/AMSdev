@@ -8,12 +8,18 @@ const router = express.Router();
 router
   .route("/")
   .get(apartmentsController.getAllApartments)
-  .post(apartmentsController.createApartment);
+  .post(
+    apartmentsController.uploadApartmentPhoto,
+    apartmentsController.createApartment
+  );
 
 router
   .route("/:num")
   .delete(apartmentsController.deleteApartment)
-  .patch(apartmentsController.updateApartment)
+  .patch(
+    apartmentsController.uploadApartmentPhoto,
+    apartmentsController.updateApartment
+  )
   .get(apartmentsController.getApartment);
 
 module.exports = router;

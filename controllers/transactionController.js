@@ -7,7 +7,7 @@ const Transaction = require("./../models/transactionModel");
 /**Here we shall be handling all maters transaction */
 exports.getTransaction = catchAsync(async (req, res, next) => {
   /**This will be defined as an arbitrary value: FIXME TO BE UPDATED*/
-  const amount = 1;
+  const amount = 10;
   const phone = req.body.phone;
 
   const paymentResponse = await initiatePayRequest(phone, amount);

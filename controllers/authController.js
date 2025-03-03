@@ -26,13 +26,17 @@ const createSendToken = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    // secure: true,(only in production https)
     httpOnly: true,
-    sameSite: "Lax",
+    secure: false,
+    sameSite: "lax",
+    path: "/",
   };
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
   res.cookie("jwt", token, cookieOptions);
+
+  /**SEND BACK THE RESPONSE(USER) WITH THE JWT TOKEN */
+  // console.log("Set-Cookie:", res.get("Set-Cookie"));
 
   res.status(statusCode).json({
     status: "success",
@@ -117,22 +121,16 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   /**IF EXISTING,CREATE A JWT TOKEN */
+  createSendToken(user, 200, res);
 
-  const token = createSendToken(user, 200, res);
-
-  console.log(token);
-
-  /**create user session on the db */
-  const session = await Session.create({
-    userId: user._id,
-    token,
-    expiresAt: new Date(
-      Date.now() + process.env.SESSION_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-  });
-
-  /**SEND BACK THE RESPONSE(USER) WITH THE JWT TOKEN */
-  req.user = user;
+  /**create user session on the db () */
+  // const session = await Session.create({
+  //   userId: user._id,
+  //   token,
+  //   expiresAt: new Date(
+  //     Date.now() + process.env.SESSION_EXPIRES_IN * 24 * 60 * 60 * 1000
+  //   ),
+  // });
 });
 
 exports.logout = (req, res) => {
