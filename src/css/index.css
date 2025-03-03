@@ -35,4 +35,18 @@
 }
 
 /* Here we apply styles to reusable components where we use the @apply directive */
-@layer components {}
+@layer components {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+}

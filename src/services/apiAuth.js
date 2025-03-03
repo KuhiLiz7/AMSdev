@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/api/v1/users';
+// const API_URL = 'http://127.0.0.1:8000/api/v1/users';
+const API_URL = 'http://localhost:8000/api/v1/users';
 
 export async function login({ email, password }) {
   const response = await axios({
@@ -12,37 +13,33 @@ export async function login({ email, password }) {
     },
     withCredentials: true,
   });
-  console.log(response);
+
   if (response.status !== 200) {
     throw new Error(response.data.message);
   }
 
-  return response.data;
+  console.log(response.data.data.user);
+
+  return response.data.data;
 }
 
 export async function logout() {
-  try {
-    const response = await axios({
-      method: 'get',
-      url: `${API_URL}/logout`,
-    });
+  const response = await axios({
+    method: 'get',
+    url: `${API_URL}/logout`,
+  });
 
-    return response;
-  } catch (err) {
-    console.log(err);
-  }
+  return response;
 }
 
 export async function getUser() {
-  try {
-    const user = await axios({
-      method: 'get',
-      url: `${API_URL}/me`,
-      withCredentials: true,
-    });
+  const user = await axios({
+    method: 'get',
+    url: `${API_URL}/me`,
+    withCredentials: true,
+  });
 
-    return user?.data || null;
-  } catch (err) {
-    console.log(err);
-  }
+  console.log(user);
+
+  return user?.data?.user || null;
 }

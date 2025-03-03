@@ -1,26 +1,26 @@
 import { useState } from 'react';
-// import { useLogin } from '../features/authentication/useLogin';
+import { useLogin } from '../features/authentication/useLogin';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // const { login, isPending } = useLogin();
+  const { login, isPending } = useLogin();
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
+  function handleSubmit(e) {
+    e.preventDefault();
 
-  //   if (!email || !password) return;
-  //   login(
-  //     { email, password },
-  //     {
-  //       onSettled: () => {
-  //         setEmail('');
-  //         setPassword('');
-  //       },
-  //     },
-  //   );
-  // }
+    if (!email || !password) return;
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail('');
+          setPassword('');
+        },
+      },
+    );
+  }
   return (
     <div className="login-page flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
@@ -28,8 +28,7 @@ function LoginPage() {
           Sign In to AMS
         </h2>
 
-        {/* <form className="space-y-4" onSubmit={handleSubmit}> */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">
               Email
@@ -80,7 +79,7 @@ function LoginPage() {
           </div>
 
           <button
-            // disabled={isPending}
+            disabled={isPending}
             className="w-full rounded-lg bg-indigo-600 py-2.5 font-medium text-white transition-colors hover:bg-indigo-700 disabled:bg-indigo-200"
           >
             Sign In

@@ -19,11 +19,15 @@ import Maintenance from './Dashboard/Maintenance/Maintenance';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
+import Adjustments from './Dashboard/Adjustments/Adjustments';
+import Units from './Dashboard/Units/Units';
+import ApartmentOverview from './Dashboard/Apartment/ApartmentOverview';
 
 /**Initializing the queryclient */
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      // staleTime: 5 * 60 * 1000,
       staleTime: 0,
     },
   },
@@ -46,10 +50,13 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/tenants" element={<Tenants />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/units" element={<Units />} />
             <Route path="/payments" element={<Payments />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/apartment" element={<Apartment />} />
+            <Route path="/apartment/:id" element={<ApartmentOverview />} />
             <Route path="/maintenance" element={<Maintenance />} />
+            <Route path="/adjustments" element={<Adjustments />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/notifications" element={<Notification />} />
           </Route>

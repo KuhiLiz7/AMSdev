@@ -11,7 +11,7 @@ export function useLogout() {
   const { mutate: logout } = useMutation({
     mutationFn: () => logoutApi(),
     onSuccess: () => {
-      queryClient.removeQueries();
+      queryClient.removeQueries({ queryKey: ['user'] });
 
       toast.success('Logged out.');
       navigate('/login', { replace: true });

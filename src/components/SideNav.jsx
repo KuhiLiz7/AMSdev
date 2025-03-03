@@ -55,6 +55,13 @@ function SideNav({ isOpen }) {
                 <span>Apartments</span>
               </NavLinkItem>
 
+              <NavLinkItem linkTo="/units">
+                <span>
+                  <BuildingOffice2Icon className="h-5.5 w-5.5" />
+                </span>
+                <span>Units</span>
+              </NavLinkItem>
+
               <NavLinkItem linkTo="/tenants">
                 <span>
                   <UserGroupIcon className="h-5.5 w-5.5" />

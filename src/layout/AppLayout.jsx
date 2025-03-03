@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import BreadCrumps from '../components/BreadCrumps';
+// import BreadCrumps from '../components/BreadCrumps';
 import Header from '../components/Header';
 import SideNav from '../components/SideNav';
 import { Outlet } from 'react-router-dom';
@@ -27,9 +27,9 @@ function AppLayout({ children }) {
           {/* --- HEADER END */}
 
           {/* --- MAIN CONTENT START */}
-          <main>
+          <main className="text-slate-900">
             <div className="mx-auto max-w-screen-2xl p-4">
-              <BreadCrumps />
+              {/* <BreadCrumps /> */}
 
               {children}
               <Outlet />
