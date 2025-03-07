@@ -112,6 +112,7 @@ function UserForm({ onCloseModal }) {
             value="testuser1234"
             className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm md:w-2/3"
             disabled={'true'}
+            {...register('password')}
           />
         </div>
         <div className="mb-4 flex flex-col md:flex-row md:items-center md:gap-4">
@@ -128,6 +129,7 @@ function UserForm({ onCloseModal }) {
             value="testuser1234"
             className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm md:w-2/3"
             disabled={'true'}
+            {...register('passwordConfirm')}
           />
         </div>
 

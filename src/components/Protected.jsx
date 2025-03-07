@@ -23,10 +23,10 @@ function Protected({ children }) {
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (!currentUser) {
-    console.log('no user found');
-    return <Navigate to="/login" replace />;
-  }
+  // if (!currentUser) {
+  //   console.log('no user found');
+  //   return <Navigate to="/login" replace />;
+  // }
 
   return children;
   // return currentUser ? children : <Navigate to="/login" replace />;

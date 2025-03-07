@@ -43,9 +43,9 @@ function Header({ onToggleSideBar, isOpen }) {
           <div className="flex items-center gap-4 px-6">
             <p className="flex flex-col text-right text-bgalt">
               <span className="text-sm font-bold">
-                {currentUser.firstName} {currentUser.lastName}
+                {currentUser?.firstName} {currentUser?.lastName}
               </span>
-              <span className="text-xs">{currentUser.role}</span>
+              <span className="text-xs">{currentUser?.role}</span>
             </p>
             <div className="h-10 w-10">
               {/* <img src={user} alt="User1" /> */}

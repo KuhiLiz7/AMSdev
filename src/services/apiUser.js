@@ -4,7 +4,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8000/api/v1/users';
 
 export async function createUser(userData) {
-  console.log(userData);
+  console.log(userData.password);
   const response = await axios({
     method: 'post',
     url: `${API_URL}`,
