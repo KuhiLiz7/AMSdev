@@ -7,14 +7,12 @@ const Transaction = require("./../models/transactionModel");
 /**Here we shall be handling all maters transaction */
 exports.getTransaction = catchAsync(async (req, res, next) => {
   /**This will be defined as an arbitrary value: FIXME TO BE UPDATED*/
-  const amount = 10;
+  const amount = req.body.amount;
   const phone = req.body.phone;
 
-  const paymentResponse = await initiatePayRequest(phone, amount);
+  console.log(phone, amount);
 
-  if (paymentResponse.ResponseCode !== "0") {
-    return next(new AppError("Request failed,please try again!", 404));
-  }
+  const paymentResponse = await initiatePayRequest(phone, amount);
 
   res.status(200).json({
     status: "success",
@@ -24,52 +22,58 @@ exports.getTransaction = catchAsync(async (req, res, next) => {
 
 /**Endpoint for the confirmation of our api request status */
 exports.getCallback = catchAsync(async (req, res, next) => {
-  console.log(req.body?.Body);
+  const callbackSTK = req.body?.Body.stkCallback;
+  const { ResultCode } = req.body?.Body.stkCallback;
+
+  if (!callbackSTK) {
+    return res.status(200).json({ message: "Awaiting result" });
+  }
+
   /**If the transaction was successfull,we need to create the transaction in the DB */
-  if (req.body?.Body || req.body.stkCallback.ResultCode === 0) {
-    const items = req.body.stkCallback.CallbackMetadata?.item || [];
+  if (ResultCode === 0) {
+    const items = callbackSTK.CallbackMetadata?.Item || [];
 
-    const paymentData = {
-      phoneNumber: items.find(item => item.Name === "PhoneNumber").Value,
-      mpesatransactionCode: items.find(
-        item => item.Name === "MpesaReceiptNumber"
-      ).Value,
-      createdAt: items.find(item => item.Name === "TransactionDate").Value,
-      amountPaid: items.find(item => item.Name === "Amount").Value,
-    };
+    const { Amount, MpesaReceiptNumber, TransactionDate, PhoneNumber } =
+      items.reduce((acc, item) => {
+        acc[item.Name] = item.Value || "";
+        return acc;
+      }, {});
 
-    const data = await Transaction.create(paymentData);
+    const data = await Transaction.create({
+      createdAt: TransactionDate,
+      amountPaid: Amount,
+      mpesatransactionCode: MpesaReceiptNumber,
+      phoneNumber: PhoneNumber,
+    });
 
     if (!data) {
-      return next(new AppError("There was an error processing payment", 404));
+      return next(
+        new AppError("There was an error creating a transaction", 404)
+      );
     }
 
-    const result = req.body;
-    console.log("Payment Result", result);
     res.status(200).json({
       status: "success",
-      data: req.body,
       message: "Successfully paid",
     });
-  } else if (req.body.stkCallback.ResultCode === 1037) {
+  } else if (ResultCode === 1037) {
     return next(new AppError("Please ensure your mobile is on!", 401));
-  } else if (
-    req.body.stkCallback.ResultCode === 1025 ||
-    req.body.stkCallback.ResultCode === 999 ||
-    req.body.stkCallback.ResultCode === 1025
-  ) {
+  } else if (ResultCode === 1025 || ResultCode === 999 || ResultCode === 1025) {
     return next(new AppError("There was an error. Please try again.", 401));
-  } else if (req.body.stkCallback.ResultCode === 1032) {
+  } else if (ResultCode === 1032) {
     return next(new AppError("You cancelled the request. Try again!", 401));
-  } else if (req.body.stkCallback.ResultCode === 1) {
+  } else if (ResultCode === 1) {
     return next(
       new AppError("You do not have sufficient funds try again.", 401)
     );
-  } else if (req.body.stkCallback.ResultCode === 1019) {
+  } else if (ResultCode === 1019) {
     return next(new AppError("Transaction expired,please try again.", 401));
-  } else if (req.body.stkCallback.ResultCode === 1037) {
+  } else if (ResultCode === 1037) {
     return next(new AppError("Request Failed,please try again", 401));
   }
+
+  return new AppError("There was an error making payments", 400);
 });
 
+/**TODO I guess this will be implemented later */
 exports.verifyTransaction = catchAsync(async (req, res, next) => {});

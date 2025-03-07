@@ -1,5 +1,6 @@
 /**A utility function to help us first generate an access token */
 const axios = require("axios");
+const AppError = require("./appError");
 
 /**here we are creating a 64base encoded consumer secret */
 const credentials = Buffer.from(
@@ -32,44 +33,47 @@ const generateOAUTHToken = async function () {
 };
 
 exports.initiatePayRequest = async function (userNumber, amount) {
-  /**First generate the token which will be the password in the request body */
-  const { access_token } = await generateOAUTHToken();
+  try {
+    /**First generate the token which will be the password in the request body */
+    const { access_token } = await generateOAUTHToken();
 
-  /**Current timestamp of the transaction */
-  const timesTampNow = generateTimeStamp();
+    /**Current timestamp of the transaction */
+    const timesTampNow = generateTimeStamp();
 
-  /**Password */
-  const password = Buffer.from(
-    `${process.env.SAFARICOM_BUSINESS_SHORT_CODE}` +
-      "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919" +
-      timesTampNow
-  ).toString("base64");
+    /**Password */
+    const password = Buffer.from(
+      `${process.env.SAFARICOM_BUSINESS_SHORT_CODE}` +
+        "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919" +
+        timesTampNow
+    ).toString("base64");
 
-  /**Initiate the mpesa API STK PUSH */
-  const response = await axios({
-    method: "post",
-    url: process.env.SAFARICOM_PUSH_URL,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${access_token} `,
-    },
-    data: {
-      BusinessShortCode: `${process.env.SAFARICOM_BUSINESS_SHORT_CODE}`,
-      Password: `${password}`,
-      Timestamp: `${timesTampNow}`,
-      TransactionType: "CustomerPayBillOnline",
-      Amount: `${amount}`,
-      PartyA: `${userNumber}`,
-      PartyB: `${process.env.SAFARICOM_BUSINESS_SHORT_CODE}`,
-      PhoneNumber: `${userNumber}`,
-      CallBackURL:
-        "https://985e-105-161-95-246.ngrok-free.app/api/v1/transactions/callback",
-      AccountReference: "Apartment Management System",
-      TransactionDesc: "Please enter your pin inorder to pay rent ksh 5000.",
-    },
-  });
+    /**Initiate the mpesa API STK PUSH */
+    const response = await axios({
+      method: "post",
+      url: process.env.SAFARICOM_PUSH_URL,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token} `,
+      },
+      data: {
+        BusinessShortCode: `${process.env.SAFARICOM_BUSINESS_SHORT_CODE}`,
+        Password: `${password}`,
+        Timestamp: `${timesTampNow}`,
+        TransactionType: "CustomerPayBillOnline",
+        Amount: `${amount}`,
+        PartyA: `${userNumber}`,
+        PartyB: `${process.env.SAFARICOM_BUSINESS_SHORT_CODE}`,
+        PhoneNumber: `${userNumber}`,
+        CallBackURL:
+          "https://f19f-41-139-239-91.ngrok-free.app/api/v1/transactions/callback",
+        AccountReference: "Apartment Management system.",
+        TransactionDesc: "Please enter your pin inorder to pay rent ksh 5000.",
+      },
+    });
 
-  console.log("This is the response", response.data);
-
-  return response.data;
+    return response.data;
+  } catch (err) {
+    console.log(err.response.data, "From console");
+    throw new AppError(err.response.data.errorMessage, 400);
+  }
 };
