@@ -1,9 +1,11 @@
-const moongose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+const mongoose = require("mongoose");
+const Unit = require("./unitModel");
+const AppError = require("../utils/appError");
 
 /**Creating user Schema */
-const userSchema = new moongose.Schema({
+const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     // required: [true, "A user must contain firstName"],
@@ -76,7 +78,20 @@ const userSchema = new moongose.Schema({
     type: Date,
     default: Date.now(),
   },
+
+  /**Referencing a unit to a tenant */
+  unit: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Unit",
+  },
+  payments: [{ type: mongoose.Schema.ObjectId, ref: "Transaction" }],
+  paidRent: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+/**TODO FIXME WE SHALL NEED A FUNCTION TO RESET ALL TENANTS PAID RENT STATUS IF HE/SHE HAS NOT PAID THAT MONTH'S RENT. IF A TENANT HAS PAID EXTRA,YOU NEED TO DISPLAY NEXT DUE DATE FOR PAYMENT */
 
 // Create a compound unique index on both username and email
 
@@ -104,6 +119,21 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+/**When we update  TENANT details we need to assign him/her vacant unit */
+userSchema.pre("findOneAndUpdate", async function (next) {
+  /**The items being updated */
+  const update = this.getUpdate();
+  const userId = this._conditions._id.$eq;
+  const unitId = update.$set.unit;
+
+  await Unit.updateOne(
+    { _id: unitId },
+    { $set: { tenant: userId, vacant: false } }
+  );
+
+  next();
+});
+
 userSchema.methods.createPasswordResetToken = function () {
   /**We shall be generating random 6 digits which will be send to clients email but encrypted on the DB */
   const randomToken = crypto.randomInt(100000, 999999).toString();
@@ -122,7 +152,7 @@ userSchema.methods.createPasswordResetToken = function () {
   return randomToken;
 };
 
-const User = moongose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
 

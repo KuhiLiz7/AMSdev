@@ -64,8 +64,7 @@ exports.initiatePayRequest = async function (userNumber, amount) {
         PartyA: `${userNumber}`,
         PartyB: `${process.env.SAFARICOM_BUSINESS_SHORT_CODE}`,
         PhoneNumber: `${userNumber}`,
-        CallBackURL:
-          "https://f19f-41-139-239-91.ngrok-free.app/api/v1/transactions/callback",
+        CallBackURL: "https://6277-41-139-239-91.ngrok-free.app/callback",
         AccountReference: "Apartment Management system.",
         TransactionDesc: "Please enter your pin inorder to pay rent ksh 5000.",
       },

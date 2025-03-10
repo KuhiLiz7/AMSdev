@@ -9,14 +9,14 @@ const unitSchema = mongoose.Schema({
     type: String,
   },
   unitNum: {
-    type: Number,
+    type: String,
   },
   floor: {
     type: Number,
   },
-  status: {
+  vacant: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   description: {
     type: String,
@@ -24,6 +24,11 @@ const unitSchema = mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
+  },
+  tenant: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    unique: true,
   },
 });
 

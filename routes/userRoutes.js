@@ -17,6 +17,7 @@ router.route("/login").post(authController.login);
 router.route("/logout").get(authController.logout);
 
 router.route("/me").get(authController.getCurrentUser);
+router.route("/assignUnit").post(userController.assignUnitTenant);
 
 router
   .route("/")

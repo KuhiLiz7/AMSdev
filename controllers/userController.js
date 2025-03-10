@@ -1,3 +1,4 @@
+const Unit = require("../models/unitModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const User = require("./../models/userModel");
@@ -6,7 +7,7 @@ const User = require("./../models/userModel");
 /**Handler funciton for getting all Users */
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find().sort({ createdAt: -1 });
+  const users = await User.find().sort({ createdAt: -1 }).populate("unit");
 
   res.status(200).json({
     status: "success",
@@ -94,4 +95,37 @@ exports.deleteUser = async (req, res, next) => {
       message: `${err}`,
     });
   }
+};
+
+exports.assignUnitTenant = async (req, res, next) => {
+  /**First we need to check whether the user exists and is active and is a tenant */
+  const user = await User.findById(req.body.tenantId);
+
+  if (user.role !== "tenant") {
+    return next(new AppError("You can only assign tenants a unit!", 400));
+  }
+
+  const unit = await Unit.findById(req.body.unit);
+
+  if (unit.tenant && unit.tenant.toString() !== req.body.tenantId.toString()) {
+    return next(
+      new AppError("This unit is already assigned to another tenant!", 400)
+    );
+  }
+
+  /**Update the unit's data */
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: { $eq: req.body.tenantId } },
+    { $set: { paidRent: req.body.paidRent, unit: req.body.unit } },
+    {
+      runValidators: true,
+    }
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      updatedUser,
+    },
+  });
 };

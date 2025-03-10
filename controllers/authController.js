@@ -38,6 +38,8 @@ const createSendToken = (user, statusCode, res) => {
   /**SEND BACK THE RESPONSE(USER) WITH THE JWT TOKEN */
   // console.log("Set-Cookie:", res.get("Set-Cookie"));
 
+  user.password = undefined;
+
   res.status(statusCode).json({
     status: "success",
     token,

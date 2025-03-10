@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const User = require("./userModel");
 
 const transactionSchema = mongoose.Schema({
   paymentMethod: {
@@ -14,7 +15,6 @@ const transactionSchema = mongoose.Schema({
   mpesatransactionCode: {
     type: String,
   },
-
   phoneNumber: {
     type: String,
   },

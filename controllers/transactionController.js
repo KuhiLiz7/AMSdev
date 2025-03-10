@@ -1,3 +1,4 @@
+const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const { initiatePayRequest } = require("../utils/darajaAPI");
@@ -10,9 +11,11 @@ exports.getTransaction = catchAsync(async (req, res, next) => {
   const amount = req.body.amount;
   const phone = req.body.phone;
 
-  console.log(phone, amount);
+  console.log(req.body.tenantId);
 
   const paymentResponse = await initiatePayRequest(phone, amount);
+
+  console.log(paymentResponse);
 
   res.status(200).json({
     status: "success",
@@ -50,6 +53,17 @@ exports.getCallback = catchAsync(async (req, res, next) => {
       return next(
         new AppError("There was an error creating a transaction", 404)
       );
+    }
+
+    /**Add the transaction Id to the transaction array on the user document */
+    const tenant = await User.findOneAndUpdate(
+      { phoneNumber: { $eq: PhoneNumber } },
+      { $push: { payments: data._id } },
+      { new: true, upsert: true }
+    );
+
+    if (!tenant) {
+      return next(new AppError("Tenant does not exist", 404));
     }
 
     res.status(200).json({
